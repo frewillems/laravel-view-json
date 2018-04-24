@@ -1,0 +1,26 @@
+{
+  "name": "frewillems/laravel-view-json",
+  "description": "Debug view data",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Frederick Willems",
+      "email": "fre.willems@thecomet.be"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "FreWillems\\ViewJson\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "FreWillems\\ViewJson\\ViewJsonServiceProvider"
+      ]
+    }
+  }
+}
