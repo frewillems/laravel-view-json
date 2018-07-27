@@ -36,7 +36,10 @@ class ViewJsonMiddleware
 
 		if (!$this->shouldConvertToJson($response)) {
 			// Enable Debug Bar again since we won't output any json
-			$this->debugBar->enable();
+			if (class_exists('Barryvdh\Debugbar\LaravelDebugbar')) {
+				$this->debugBar->enable();
+			}
+
 			return $next($request);
 		}
 
@@ -52,7 +55,7 @@ class ViewJsonMiddleware
 			return false;
 		}
 
-		if ($response->isServerError()) {
+		if ($response->isServerError() || $response->isNotFound()) {
 			return false;
 		}
 
