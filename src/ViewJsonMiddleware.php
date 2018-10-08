@@ -15,7 +15,7 @@ class ViewJsonMiddleware
 	public function __construct()
 	{
 		// Play nice with Barry's Debug Bar
-		if (class_exists('Barryvdh\Debugbar\LaravelDebugbar')) {
+		if ($this->hasDebugBar()) {
 			$this->debugBar = App::make('Barryvdh\Debugbar\LaravelDebugbar');
 			$this->debugBar->disable();
 		}
@@ -27,6 +27,10 @@ class ViewJsonMiddleware
 			return $this->viewJson($request, $next);
 		}
 
+        if ($this->hasDebugBar()) {
+            $this->debugBar->enable();
+        }
+
 		return $next($request);
 	}
 
@@ -36,7 +40,7 @@ class ViewJsonMiddleware
 
 		if (!$this->shouldConvertToJson($response)) {
 			// Enable Debug Bar again since we won't output any json
-			if (class_exists('Barryvdh\Debugbar\LaravelDebugbar')) {
+			if ($this->hasDebugBar()) {
 				$this->debugBar->enable();
 			}
 
@@ -65,4 +69,9 @@ class ViewJsonMiddleware
 
 		return true;
 	}
+
+	private function hasDebugBar()
+    {
+        return class_exists('Barryvdh\Debugbar\LaravelDebugbar');
+    }
 }
